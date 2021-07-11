@@ -96,7 +96,8 @@
                     ---------- ---------- ----------- ----------
                     1          New York   London      415
                     4          New York   Paris       435
-                    </code>
+                    
+</code>
                     
                     
                     <b>Project and apps</b>
