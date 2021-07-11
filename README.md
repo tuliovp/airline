@@ -31,6 +31,7 @@
                     <p>Now, if we run <code>sqlite3 flights.sql</code> in the terminal, we’ll be brought to a SQLite prompt where we can run SQL commands:</p>
                     <br>
                     <code>
+                    
                     # Entering into the SQLite Prompt<br>
                     (base) % sqlite3 flights.sql<br><br>
                     # Creating a new Table<br>
