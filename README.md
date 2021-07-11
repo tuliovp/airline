@@ -202,27 +202,27 @@
                     <b>Django Admin</b>
                     <br><br>
                     <p>Django comes with a default admin interface that allows us to do the operations in the database above more easily than through command lines or accessing <code>http://127.0.0.1:8000/admin</code>. To begin using this tool, we must first create an administrative user, and we'll have something like this:</p>
-                    <img src="/media/django_admin.png"> 
                     <br><br>
                     <b>Users</b>
                     <br><br>
                     <p>>The last thing I've done in this project was creating a form of authentication, allowing users to log in and out of a website.</p>
-                    <p><code>
-                    {% extends "users/layout.html" %}<br><br>
+                    <code>
+                    
+                    {% extends "users/layout.html" %}
 
-                    {% block body %}<br>
-                    &nbsp;&nbsp;&nbsp;{% if message %}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div>{{ message }}&lt;/div><br>
-                    &nbsp;&nbsp;&nbsp;{% endif %}<br><br>
+                    {% block body %}
+                    {% if message %}
+                        <div>{{ message }}</div>
+                    {% endif %}
 
-                    &nbsp;&nbsp;&nbsp;&lt;form action="{% url 'login' %}" method="post"><br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% csrf_token %}<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text", name="username", placeholder="Username"><br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="password", name="password", placeholder="Password"><br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="submit", value="Login"><br>
-                    &nbsp;&nbsp;&nbsp;&lt;/form><br>
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text", name="username", placeholder="Username">
+                        <input type="password", name="password", placeholder="Password">
+                        <input type="submit", value="Login">
+                    </form>
                     {% endblock %}
-                    </code></p>
+</code>
                         <form>
                             <input type="text", name="username", placeholder="Username">
                             <input type="password", name="password", placeholder="Password">
