@@ -31,63 +31,64 @@
                     <p>Now, if we run <code>sqlite3 flights.sql</code> in the terminal, we’ll be brought to a SQLite prompt where we can run SQL commands:</p>
                     <br>
                     <code>
-                    
-                    # Entering into the SQLite Prompt<br>
-                    (base) % sqlite3 flights.sql<br><br>
-                    # Creating a new Table<br>
-                    sqlite> CREATE TABLE flights(<br>
-                      ...>     id INTEGER PRIMARY KEY AUTOINCREMENT,<br>
-                      ...>     origin TEXT NOT NULL,<br>
-                      ...>     destination TEXT NOT NULL,<br>
-                      ...>     duration INTEGER NOT NULL<br>
-                      ...> );<br><br>
 
-                    # Listing all current tables (Just flights for now)<br>
-                    sqlite> .tables<br>
-                    flights<br><br>
+                    # Entering into the SQLite Prompt
+                    (base) % sqlite3 flights.sql
 
-                    # Querying for everything within flights (Which is now empty)<br>
-                    sqlite> SELECT * FROM flights;<br><br>
+                    # Creating a new Table
+                    sqlite> CREATE TABLE flights(
+                      ...>     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      ...>     origin TEXT NOT NULL,
+                      ...>     destination TEXT NOT NULL,
+                      ...>     duration INTEGER NOT NULL
+                      ...> );
 
-                    # Adding one flight<br>
-                    sqlite> INSERT INTO flights<br>
-                      ...>     (origin, destination, duration)<br>
-                      ...>     VALUES ("New York", "London", 415);<br><br>
+                    # Listing all current tables (Just flights for now)
+                    sqlite> .tables
+                    flights
 
-                    # Checking for new information, which we can now see<br>
-                    sqlite> SELECT * FROM flights;<br>
-                    1|New York|London|415<br><br>
+                    # Querying for everything within flights (Which is now empty)
+                    sqlite> SELECT * FROM flights;
 
-                    # Adding some more flights<br>
-                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Shanghai", "Paris", 760);<br>
-                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Istanbul", "Tokyo", 700);<br>
-                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("New York", "Paris", 435);<br>
-                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Moscow", "Paris", 245);<br>
-                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Lima", "New York", 455);<br><br>
+                    # Adding one flight
+                    sqlite> INSERT INTO flights
+                      ...>     (origin, destination, duration)
+                      ...>     VALUES ("New York", "London", 415);
 
-                    # Querying this new information<br>
-                    sqlite> SELECT * FROM flights;<br>
-                    1|New York|London|415<br>
-                    2|Shanghai|Paris|760<br>
-                    3|Istanbul|Tokyo|700<br>
-                    4|New York|Paris|435<br>
-                    5|Moscow|Paris|245<br>
-                    6|Lima|New York|455<br><br>
+                    # Checking for new information, which we can now see
+                    sqlite> SELECT * FROM flights;
+                    1|New York|London|415
 
-                    # Changing the settings to make output more readable<br>
-                    sqlite> .mode columns<br>
-                    sqlite> .headers yes<br><br>
+                    # Adding some more flights
+                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Shanghai", "Paris", 760);
+                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Istanbul", "Tokyo", 700);
+                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("New York", "Paris", 435);
+                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Moscow", "Paris", 245);
+                    sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Lima", "New York", 455);
 
-                    # Querying all information again<br>
-                    sqlite> SELECT * FROM flights;<br>
-                    id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;duration<br>
-                    ----------  ----------  -----------  ----------<br>
-                    1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;London&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;415<br>
-                    2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shanghai&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;760<br>
-                    3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Istanbul&nbsp;&nbsp;&nbsp;Tokyo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;700<br>
-                    4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;435<br>
-                    5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Moscow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;245<br>
-                    6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lima&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;&nbsp;455<br><br>
+                    # Querying this new information
+                    sqlite> SELECT * FROM flights;
+                    1|New York|London|415
+                    2|Shanghai|Paris|760
+                    3|Istanbul|Tokyo|700
+                    4|New York|Paris|435
+                    5|Moscow|Paris|245
+                    6|Lima|New York|455
+
+                    # Changing the settings to make output more readable
+                    sqlite> .mode columns
+                    sqlite> .headers yes
+
+                    # Querying all information again
+                    sqlite> SELECT * FROM flights;
+                    id         origin     destination duration
+                    ---------- ---------- ----------- ----------
+                    1          New York   London      415
+                    2          Shanghai   Paris       760
+                    3          Istanbul   Tokyo       700
+                    4          New York   Paris       435
+                    5          Moscow     Paris       245
+                    6          Lima       New York    455
 
                     # Searching for just those flights originating in New York<br>
                     sqlite> SELECT * FROM flights WHERE origin = "New York";<br>
