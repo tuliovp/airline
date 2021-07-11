@@ -101,62 +101,64 @@
                     <b>Project and apps</b>
                     <br><br>
                     <p><b>Django Models</b> are a level of abstraction on top of SQL that allow us to work with databases using Python classes and objects rather than direct SQL queries.
-                    <br>
+                    <br><br>
                     Now, rather than creating actual paths and getting started on <code>views.py</code>, we’ll create some models in the <code>models.py</code> file. In this file, we’ll outline what data we want to store in our application and create a new model that extends Django’s model class. Then, Django will determine the SQL syntax necessary to store information on each of our models.</p>
-                    <p><code>
-                    class Airport(models.Model):<br>
-                    &nbsp;&nbsp;&nbsp;code = models.CharField(max_length=3)<br>
-                    &nbsp;&nbsp;&nbsp;city = models.CharField(max_length=64)<br><br>
+                    <code>
 
-                    &nbsp;&nbsp;&nbsp;def __str__(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f"{self.city} ({self.code})"<br><br>
+                    class Airport(models.Model):
+                        code = models.CharField(max_length=3)
+                        city = models.CharField(max_length=64)
 
-                    class Flight(models.Model):<br>
-                    &nbsp;&nbsp;&nbsp;origin = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="departures")<br>
-                    &nbsp;&nbsp;&nbsp;destination = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="arrivals")<br>
-                    &nbsp;&nbsp;&nbsp;duration = models.IntegerField()<br><br>
+                        def __str__(self):
+                            return f"{self.city} ({self.code})"
 
-                    &nbsp;&nbsp;&nbsp;def __str__(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f"{self.id}: {self.origin} to {self.destination}"
-                    </code></p>
+                    class Flight(models.Model):
+                        origin = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="departures")
+                        destination = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="arrivals")
+                        duration = models.IntegerField()
+
+                        def __str__(self):
+                            return f"{self.id}: {self.origin} to {self.destination}"
+</code>
                     <p>To create a database from our models, we navigate to the main directory of our project and run the command.</p>
-                    <p><code>
-                    python manage.py makemigrations<br>
+                    <code>
+                    python manage.py makemigrations
                     python manage.py migrate
-                    </code></p>
+                    </code>
                     <p>We can enter Django’s shell to run Python commands within our project.</p>
-                    <p><code>
-                    python manage.py shell<br><br>
+                    <code>
+                    
+                    python manage.py shell
 
-                    # Import all models<br>
-                    In [1]: from flights.models import *<br><br>
+                    # Import all models
+                    In [1]: from flights.models import *
 
-                    # Create some new airports<br>
-                    In [2]: jfk = Airport(code="JFK", city="New York")<br>
-                    In [4]: lhr = Airport(code="LHR", city="London")<br>
-                    In [6]: cdg = Airport(code="CDG", city="Paris")<br>
-                    In [9]: nrt = Airport(code="NRT", city="Tokyo")<br><br>
+                    # Create some new airports
+                    In [2]: jfk = Airport(code="JFK", city="New York")
+                    In [4]: lhr = Airport(code="LHR", city="London")
+                    In [6]: cdg = Airport(code="CDG", city="Paris")
+                    In [9]: nrt = Airport(code="NRT", city="Tokyo")
 
-                    # Save the airports to the database<br>
-                    In [3]: jfk.save()<br>
-                    In [5]: lhr.save()<br>
-                    In [8]: cdg.save()<br>
-                    In [10]: nrt.save()<br><br>
+                    # Save the airports to the database
+                    In [3]: jfk.save()
+                    In [5]: lhr.save()
+                    In [8]: cdg.save()
+                    In [10]: nrt.save()
 
-                    # Add a flight and save it to the database<br>
-                    f = Flight(origin=jfk, destination=lhr, duration=414)<br>
-                    f.save()<br><br>
+                    # Add a flight and save it to the database
+                    f = Flight(origin=jfk, destination=lhr, duration=414)
+                    f.save()
 
-                    # Display some info about the flight<br>
-                    In [14]: f<br>
-                    Out[14]: &lt;Flight: 1: New York (JFK) to London (LHR)&gt;<br>
-                    In [15]: f.origin<br>
-                    Out[15]: &lt;Airport: New York (JFK)&gt;<br><br>
+                    # Display some info about the flight
+                    In [14]: f
+                    Out[14]: <Flight: 1: New York (JFK) to London (LHR)>
+                    In [15]: f.origin
+                    Out[15]: <Airport: New York (JFK)>
 
-                    # Using the related name to query by airport of arrival:<br>
-                    In [17]: lhr.arrivals.all()<br>
-                    Out[17]: &lt;QuerySet [&lt;Flight: 1: New York (JFK) to London (LHR)&gt;]&gt;<br>
-                    </code></p>
+                    # Using the related name to query by airport of arrival:
+                    In [17]: lhr.arrivals.all()
+                    Out[17]: <QuerySet [<Flight: 1: New York (JFK) to London (LHR)>]>
+</code></p>
                     <br>
                     <b>Booking </b>
                     <br><br>
@@ -164,36 +166,39 @@
                     <p><code>path("&lt;int:flight_id&gt;/book", views.book, name="book")</code></p>
                     <p>Now, we’ll add a book function to <code>views.py</code> that adds a passenger to a flight:</p>
                     <p><code>
-                    def book(request, flight_id):<br><br>
+                    
+                    def book(request, flight_id):
 
-                    &nbsp;&nbsp;&nbsp;# For a post request, add a new flight<br>
-                    &nbsp;&nbsp;&nbsp;if request.method == "POST":<br><br>
+                        # For a post request, add a new flight
+                        if request.method == "POST":
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Accessing the flight<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flight = Flight.objects.get(pk=flight_id)<br><br>
+                            # Accessing the flight
+                            flight = Flight.objects.get(pk=flight_id)
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Finding the passenger id from the submitted form data<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passenger_id = int(request.POST["passenger"])<br><br>
+                            # Finding the passenger id from the submitted form data
+                            passenger_id = int(request.POST["passenger"])
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Finding the passenger based on the id<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passenger = Passenger.objects.get(pk=passenger_id)<br><br>
+                            # Finding the passenger based on the id
+                            passenger = Passenger.objects.get(pk=passenger_id)
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Add passenger to the flight<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passenger.flights.add(flight)<br><br>
+                            # Add passenger to the flight
+                            passenger.flights.add(flight)
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Redirect user to flight page<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponseRedirect(reverse("flight", args=(flight.id,)))<br><br><br>
+                            # Redirect user to flight page
+                            return HttpResponseRedirect(reverse("flight", args=(flight.id,)))
 
-                    def flight(request, flight_id):<br><br>
-                    &nbsp;&nbsp;&nbsp;flight = Flight.objects.get(id=flight_id)<br>
-                    &nbsp;&nbsp;&nbsp;passengers = flight.passengers.all()<br>
-                    &nbsp;&nbsp;&nbsp;non_passengers = Passenger.objects.exclude(flights=flight).all()<br>
-                    &nbsp;&nbsp;&nbsp;return render(request, "flights/flight.html", {<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"flight": flight,<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"passengers": passengers,<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"non_passengers": non_passengers<br>
+
+                    def flight(request, flight_id):
+
+                        flight = Flight.objects.get(id=flight_id)
+                        passengers = flight.passengers.all()
+                        non_passengers = Passenger.objects.exclude(flights=flight).all()
+                        return render(request, "flights/flight.html", {
+                            "flight": flight,
+                            "passengers": passengers,
+                            "non_passengers": non_passengers
                         })
-                    </code></p>
+</code></p>
                     <br>
                     <b>Django Admin</b>
                     <br><br>
