@@ -223,45 +223,41 @@
                     </form>
                     {% endblock %}
 </code>
-                        <form>
-                            <input type="text", name="username", placeholder="Username">
-                            <input type="password", name="password", placeholder="Password">
-                            <input type="submit", value="Login">
-                        </form>
                     <br>
                     <p>Now, in <code>views.py</code>, we’ll add three functions:</p>
-                    <p><code>
-                    def index(request):<br>
-                    &nbsp;&nbsp;&nbsp;# If no user is signed in, return to login page:<br>
-                    &nbsp;&nbsp;&nbsp;if not request.user.is_authenticated:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponseRedirect(reverse("login"))<br>
-                    &nbsp;&nbsp;&nbsp;return render(request, "users/user.html")<br><br>
+                    <code>
+                    
+                    def index(request):
+                        # If no user is signed in, return to login page:
+                        if not request.user.is_authenticated:
+                            return HttpResponseRedirect(reverse("login"))
+                        return render(request, "users/user.html")
 
-                    def login_view(request):<br>
-                    &nbsp;&nbsp;&nbsp;if request.method == "POST":<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Accessing username and password from form data<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username = request.POST["username"]<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password = request.POST["password"]<br><br>
+                    def login_view(request):
+                        if request.method == "POST":
+                            # Accessing username and password from form data
+                            username = request.POST["username"]
+                            password = request.POST["password"]
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Check if username and password are correct, returning User object if so<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user = authenticate(request, username=username, password=password)<br><br>
+                            # Check if username and password are correct, returning User object if so
+                            user = authenticate(request, username=username, password=password)
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# If user object is returned, log in and route to index page:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if user:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;login(request, user)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return HttpResponseRedirect(reverse("index"))<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Otherwise, return login page again with new context<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return render(request, "users/login.html", {<br>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": "Invalid Credentials"<br>
-                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>
-                                &nbsp;&nbsp;&nbsp;return render(request, "users/login.html")<br><br>
+                            # If user object is returned, log in and route to index page:
+                            if user:
+                                login(request, user)
+                                return HttpResponseRedirect(reverse("index"))
+                            # Otherwise, return login page again with new context
+                            else:
+                                return render(request, "users/login.html", {
+                                    "message": "Invalid Credentials"
+                            })
+                        return render(request, "users/login.html")
 
-                    def logout_view(request):<br>
-                    &nbsp;&nbsp;&nbsp;logout(request)<br>
-                    &nbsp;&nbsp;&nbsp;return render(request, "users/login.html", {<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": "Logged Out"<br>
-                      &nbsp;&nbsp;&nbsp;})
-                    </code></p>
+                    def logout_view(request):
+                        logout(request)
+                        return render(request, "users/login.html", {
+                            "message": "Logged Out"
+                        })
+</code>
                     And that's it.
                   </p>
