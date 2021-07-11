@@ -90,14 +90,15 @@
                     5          Moscow     Paris       245
                     6          Lima       New York    455
 
-                    # Searching for just those flights originating in New York<br>
-                    sqlite> SELECT * FROM flights WHERE origin = "New York";<br>
-                    id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;duration<br>
-                    ----------  ----------  -----------  ----------<br>
-                    1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;London&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;415<br>
-                    4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;435<br>
-                    </p></code>
-                    <br>
+                    # Searching for just those flights originating in New York
+                    sqlite> SELECT * FROM flights WHERE origin = "New York";
+                    id         origin     destination duration
+                    ---------- ---------- ----------- ----------
+                    1          New York   London      415
+                    4          New York   Paris       435
+                    </code>
+                    
+                    
                     <b>Project and apps</b>
                     <br><br>
                     <p><b>Django Models</b> are a level of abstraction on top of SQL that allow us to work with databases using Python classes and objects rather than direct SQL queries.
