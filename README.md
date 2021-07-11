@@ -1,5 +1,5 @@
 <h1 style="font-size: 32px;">Playing Around (Django)</h1>
-              <p>Trying Python’s Django framework to create dynamic applications<br> that generates HTML and CSS.</p>
+              <p>Trying Python’s Django framework to create dynamic applications that generates HTML and CSS.</p>
                 <div class="case_content">
                   <h1>Description</h1>
                   <hr>
@@ -33,7 +33,6 @@
                     <p><code>
                     # Entering into the SQLite Prompt<br>
                     (base) % sqlite3 flights.sql<br><br>
-                    
                     # Creating a new Table<br>
                     sqlite> CREATE TABLE flights(<br>
                       ...>     id INTEGER PRIMARY KEY AUTOINCREMENT,<br>
