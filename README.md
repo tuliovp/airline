@@ -164,7 +164,8 @@
                     <p>Now, let’s work on giving visitors to our site the ability to book a flight. We’ll do this by adding a booking route in <code>urls.py</code>:</p>
                     <p><code>path("&lt;int:flight_id&gt;/book", views.book, name="book")</code></p>
                     <p>Now, we’ll add a book function to <code>views.py</code> that adds a passenger to a flight:</p>
-                    <p><code>
+                    <code>
+                  
                     def book(request, flight_id):
 
                         # For a post request, add a new flight
@@ -196,7 +197,7 @@
                             "passengers": passengers,
                             "non_passengers": non_passengers
                         })
-</code></p>
+</code>
                     <br>
                     <b>Django Admin</b>
                     <br><br>
