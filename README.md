@@ -201,7 +201,7 @@
                     <br>
                     <b>Django Admin</b>
                     <br><br>
-                    <p>Django comes with a default admin interface that allows us to do the operations in the database above more easily than through command lines or accessing <code>http://127.0.0.1:8000/admin</code>. To begin using this tool, we must first create an administrative user, and we'll have something like this:</p>
+                    <p>Django comes with a default admin interface that allows us to do the operations in the database above more easily than through command lines or accessing <code>http://127.0.0.1:8000/admin</code>.</p>
                     <br><br>
                     <b>Users</b>
                     <br><br>
