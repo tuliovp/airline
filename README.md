@@ -98,8 +98,6 @@
                     4          New York   Paris       435
                     
 </code>
-                    
-                    
                     <b>Project and apps</b>
                     <br><br>
                     <p><b>Django Models</b> are a level of abstraction on top of SQL that allow us to work with databases using Python classes and objects rather than direct SQL queries.
