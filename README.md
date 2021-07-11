@@ -1,6 +1,5 @@
 <h1 style="font-size: 32px;">Playing Around (Django)</h1>
               <p>Trying Python’s Django framework to create dynamic applications<br> that generates HTML and CSS.</p>
-
                 <div class="case_content">
                   <h1>Description</h1>
                   <hr>
