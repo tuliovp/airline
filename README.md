@@ -1,5 +1,6 @@
 <h1 style="font-size: 32px;">Playing Around (Django)</h1>
               <p>Trying Python’s Django framework to create dynamic applications<br> that generates HTML and CSS.</p>
+
                 <div class="case_content">
                   <h1>Description</h1>
                   <hr>
@@ -33,6 +34,7 @@
                     <p><code>
                     # Entering into the SQLite Prompt<br>
                     (base) % sqlite3 flights.sql<br><br>
+                    
                     # Creating a new Table<br>
                     sqlite> CREATE TABLE flights(<br>
                       ...>     id INTEGER PRIMARY KEY AUTOINCREMENT,<br>
@@ -40,24 +42,30 @@
                       ...>     destination TEXT NOT NULL,<br>
                       ...>     duration INTEGER NOT NULL<br>
                       ...> );<br><br>
+
                     # Listing all current tables (Just flights for now)<br>
                     sqlite> .tables<br>
                     flights<br><br>
+
                     # Querying for everything within flights (Which is now empty)<br>
                     sqlite> SELECT * FROM flights;<br><br>
+
                     # Adding one flight<br>
                     sqlite> INSERT INTO flights<br>
                       ...>     (origin, destination, duration)<br>
                       ...>     VALUES ("New York", "London", 415);<br><br>
+
                     # Checking for new information, which we can now see<br>
                     sqlite> SELECT * FROM flights;<br>
                     1|New York|London|415<br><br>
+
                     # Adding some more flights<br>
                     sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Shanghai", "Paris", 760);<br>
                     sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Istanbul", "Tokyo", 700);<br>
                     sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("New York", "Paris", 435);<br>
                     sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Moscow", "Paris", 245);<br>
                     sqlite> INSERT INTO flights (origin, destination, duration) VALUES ("Lima", "New York", 455);<br><br>
+
                     # Querying this new information<br>
                     sqlite> SELECT * FROM flights;<br>
                     1|New York|London|415<br>
@@ -66,9 +74,11 @@
                     4|New York|Paris|435<br>
                     5|Moscow|Paris|245<br>
                     6|Lima|New York|455<br><br>
+
                     # Changing the settings to make output more readable<br>
                     sqlite> .mode columns<br>
                     sqlite> .headers yes<br><br>
+
                     # Querying all information again<br>
                     sqlite> SELECT * FROM flights;<br>
                     id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;duration<br>
@@ -79,6 +89,7 @@
                     4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;435<br>
                     5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Moscow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paris&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;245<br>
                     6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lima&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New York&nbsp;&nbsp;&nbsp;&nbsp;455<br><br>
+
                     # Searching for just those flights originating in New York<br>
                     sqlite> SELECT * FROM flights WHERE origin = "New York";<br>
                     id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destination&nbsp;duration<br>
@@ -96,12 +107,15 @@
                     class Airport(models.Model):<br>
                     &nbsp;&nbsp;&nbsp;code = models.CharField(max_length=3)<br>
                     &nbsp;&nbsp;&nbsp;city = models.CharField(max_length=64)<br><br>
+
                     &nbsp;&nbsp;&nbsp;def __str__(self):<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f"{self.city} ({self.code})"<br><br>
+
                     class Flight(models.Model):<br>
                     &nbsp;&nbsp;&nbsp;origin = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="departures")<br>
                     &nbsp;&nbsp;&nbsp;destination = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="arrivals")<br>
                     &nbsp;&nbsp;&nbsp;duration = models.IntegerField()<br><br>
+
                     &nbsp;&nbsp;&nbsp;def __str__(self):<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return f"{self.id}: {self.origin} to {self.destination}"
                     </code></p>
@@ -113,26 +127,32 @@
                     <p>We can enter Django’s shell to run Python commands within our project.</p>
                     <p><code>
                     python manage.py shell<br><br>
+
                     # Import all models<br>
                     In [1]: from flights.models import *<br><br>
+
                     # Create some new airports<br>
                     In [2]: jfk = Airport(code="JFK", city="New York")<br>
                     In [4]: lhr = Airport(code="LHR", city="London")<br>
                     In [6]: cdg = Airport(code="CDG", city="Paris")<br>
                     In [9]: nrt = Airport(code="NRT", city="Tokyo")<br><br>
+
                     # Save the airports to the database<br>
                     In [3]: jfk.save()<br>
                     In [5]: lhr.save()<br>
                     In [8]: cdg.save()<br>
                     In [10]: nrt.save()<br><br>
+
                     # Add a flight and save it to the database<br>
                     f = Flight(origin=jfk, destination=lhr, duration=414)<br>
                     f.save()<br><br>
+
                     # Display some info about the flight<br>
                     In [14]: f<br>
                     Out[14]: &lt;Flight: 1: New York (JFK) to London (LHR)&gt;<br>
                     In [15]: f.origin<br>
                     Out[15]: &lt;Airport: New York (JFK)&gt;<br><br>
+
                     # Using the related name to query by airport of arrival:<br>
                     In [17]: lhr.arrivals.all()<br>
                     Out[17]: &lt;QuerySet [&lt;Flight: 1: New York (JFK) to London (LHR)&gt;]&gt;<br>
@@ -145,10 +165,13 @@
                     <p>Now, we’ll add a book function to <code>views.py</code> that adds a passenger to a flight:</p>
                     <p><code>
                     def book(request, flight_id):<br><br>
+
                     &nbsp;&nbsp;&nbsp;# For a post request, add a new flight<br>
                     &nbsp;&nbsp;&nbsp;if request.method == "POST":<br><br>
+
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Accessing the flight<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flight = Flight.objects.get(pk=flight_id)<br><br>
+
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Finding the passenger id from the submitted form data<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passenger_id = int(request.POST["passenger"])<br><br>
 
